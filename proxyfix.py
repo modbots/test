@@ -3,11 +3,10 @@ import requests
 import json
 def proxyfix(a):
     b = a
-    url = ["https://raw.githubusercontent.com/UptimerBot/proxy-list/main/proxies/http.txt",#"https://www.proxyscan.io/download?type=http"
-    "http://proxysearcher.sourceforge.net/Proxy%20List.php?type=http",
+    url = ["https://raw.githubusercontent.com/UptimerBot/proxy-list/main/proxies/http.txt",
+    "https://www.proxyscan.io/download?type=http"
     "http://worm.rip/http.txt",
     "https://api.proxyscrape.com/v2/?request=getproxies&protocol=http",
-    "https://openproxy.space/list/http",
     "https://openproxylist.xyz/http.txt",
     "https://proxyspace.pro/http.txt",
     "https://proxyspace.pro/https.txt",
