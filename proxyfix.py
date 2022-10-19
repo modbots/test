@@ -31,12 +31,7 @@ def proxyfix(a):
     "https://raw.githubusercontent.com/sunny9577/proxy-scraper/master/proxies.txt",
     "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt",
     "https://rootjazz.com/proxies/proxies.txt",
-    "https://sheesh.rip/http.txt",
-    "https://spys.me/proxy.txt",
-    "https://www.freeproxychecker.com/result/http_proxies.txt",
-    "https://www.proxy-list.download/api/v1/get?type=http",
-    "https://www.proxy-list.download/api/v1/get?type=https",
-    "https://www.proxyscan.io/download?type=http"]
+    "https://sheesh.rip/http.txt"]
     purl =  random.choice(url)
     proxis = requests.get(purl).text
     proxis = proxis.splitlines()
