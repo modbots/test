@@ -75,8 +75,8 @@ async def Jav(bot, cmd):
                 img = art.find('img')['data-src']
                 link = art.find('a')['href']
                 title = art.find('a')['title'] 
-                #cat,star,tag,video =  fetch(link)
-                video = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+                cat,star,tag,video =  fetch(link)
+                #video = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
                 with open(dl_path +'/videos.json') as json_file:
                     json_decoded = json.load(json_file)
                 if not link in json_decoded:
