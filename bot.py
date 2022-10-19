@@ -52,6 +52,7 @@ async def HelpWatermark(bot, cmd):
 
 async def Jav(bot, cmd):
     user_id = cmd.from_user.id
+    dl_path = str(user_id)
     a = await bot.send_message(
             chat_id=cmd.chat.id,
             text="HELLO",
@@ -75,52 +76,64 @@ async def Jav(bot, cmd):
                 link = art.find('a')['href']
                 title = art.find('a')['title'] 
                 #cat,star,tag,video =  fetch(link)
-                video = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4"
-                file = urllib.request.urlopen(video)
-                filesize = file.length
-                readableSize = sizeof_fmt(filesize)
-                print(filesize)
-                if (int(filesize) < 1073741824):
-                    print("i am here")
-                    dl_path = str(user_id)
-                    print(dl_path)
-                    if not os.path.exists(dl_path):
-                        os.makedirs(dl_path)
-                    poster = download_poster(img, dl_path)
-                    vresult = download_fmax(video, dl_path)
-                    videoname = os.path.basename(video)
-                    file_path = os.path.join(f"{dl_path}/{videoname}")
-                    if os.path.exists(file_path):
-                        editable = await bot.send_message(
-                                                                        chat_id=cmd.chat.id,
-                                                                        text= "wait for a moment",
-                                        
-                                                                         )	
-                        translated = GoogleTranslator(source='auto', target='my', proxies=proxy).translate(text=title)
-                        width = 100
-                        height = 100
-                        duration = 0
-                        metadata = extractMetadata(createParser(file_path))
-                        if metadata.has("duration"):
-                            duration = metadata.get('duration').seconds
-                        if metadata.has("width"):
-                            width = metadata.get("width")
-                        if metadata.has("height"):
-                            height = metadata.get("height")	
-                        video_thumbnails = str(cmd.from_user.id) + "/" + "thumb.jpg"
-                        file_size = os.path.getsize(file_path)
-                        sent_vid = await send_video_handler_fmax(bot, cmd, file_path, video_thumbnails, duration, width, height, editable, file_size, translated)
-                        await editable.delete()
-                        os.remove(video_thumbnails)
-                        filelist = glob.glob(os.path.join(dl_path, "*.*"))
-                        for f in filelist:
-                            os.remove(f)
-                    #await bot.send_photo(
-                    #    chat_id=cmd.chat.id,
-                    #    photo = 'thumb.jpg',
-                    #    caption="👇" + translated + "...🎬 HD 🔞 " + str(star) + "Size: "+ readableSize,
-                    #)
-                    #os.remove('thumb.jpg')
+                video = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+                with open(dl_path +'/videos.json') as json_file:
+                    json_decoded = json.load(json_file)
+                if not link in json_decoded:
+                
+                    file = urllib.request.urlopen(video)
+                    filesize = file.length
+                    readableSize = sizeof_fmt(filesize)
+                    print(filesize)
+                    if (int(filesize) < 1073741824):
+                        print("i am here")
+                       
+                        print(dl_path)
+                        if not os.path.exists(dl_path):
+                            os.makedirs(dl_path)
+                        poster = download_poster(img, dl_path)
+                        vresult = download_fmax(video, dl_path)
+                        videoname = os.path.basename(video)
+                        file_path = os.path.join(f"{dl_path}/{videoname}")
+                        if os.path.exists(file_path):
+                            editable = await bot.send_message(
+                                                                            chat_id=cmd.chat.id,
+                                                                            text= "wait for a moment",
+                                            
+                                                                            )	
+                            translated = GoogleTranslator(source='auto', target='my', proxies=proxy).translate(text=title)
+                            width = 100
+                            height = 100
+                            duration = 0
+                            metadata = extractMetadata(createParser(file_path))
+                            if metadata.has("duration"):
+                                duration = metadata.get('duration').seconds
+                            if metadata.has("width"):
+                                width = metadata.get("width")
+                            if metadata.has("height"):
+                                height = metadata.get("height")	
+                            video_thumbnails = str(cmd.from_user.id) + "/" + "thumb.jpg"
+                            file_size = os.path.getsize(file_path)
+                            sent_vid = await send_video_handler_fmax(bot, cmd, file_path, video_thumbnails, duration, width, height, editable, file_size, translated)
+                            vid = str(sent_vid.message_id)
+                            json_decoded[link] = vid
+
+                            with open(dl_path +'/videos.json', 'w') as json_file:
+                                json.dump(json_decoded, json_file)
+                            await editable.delete()
+                            os.remove(video_thumbnails)
+                            os.remove(file_path)
+                            #filelist = glob.glob(os.path.join(dl_path, "*.*"))
+                            #for f in filelist:
+                            #    os.remove(f)
+                        #await bot.send_photo(
+                        #    chat_id=cmd.chat.id,
+                        #    photo = 'thumb.jpg',
+                        #    caption="👇" + translated + "...🎬 HD 🔞 " + str(star) + "Size: "+ readableSize,
+                        #)
+                        #os.remove('thumb.jpg')
+                    else:
+                        pass
                 else:
                     pass
             except:
